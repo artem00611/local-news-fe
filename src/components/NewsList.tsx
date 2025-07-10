@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 interface NewsItem {
-  id: string;
+  id?: string;
   title: string;
   content: string;
 }
@@ -44,13 +44,21 @@ export default function NewsList({ cityName, stateCode, isGlobal }: NewsListProp
   }, [cityName, stateCode, isGlobal]);
 
   return (
-    <ul className="space-y-3">
-      {news.map((item) => (
-        <li key={item.id} className="border p-3 rounded shadow">
-          <h3 className="font-bold text-lg">{item.title}</h3>
-          <p className="text-sm text-gray-600">{item.content}</p>
-        </li>
-      ))}
-    </ul>
+    <div>
+      {news.length === 0 ? (
+        <div className="text-center text-gray-500 mt-4 p-4 border rounded">
+          No news available for this location.
+        </div>
+      ) : (
+        <ul className="space-y-3">
+          {news.map((item, index) => (
+            <li key={item.id ?? index} className="border p-3 rounded shadow">
+              <h3 className="font-bold text-lg">{item.title}</h3>
+              <p className="text-sm text-gray-600">{item.content}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

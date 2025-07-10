@@ -21,19 +21,23 @@ export default function App() {
     setShowModal(false);
   };
 
+  /** Helper: decide what the section heading should say */
+  const sectionTitle = (() => {
+    if (!selectedCity) return 'Global News';                       // no city selected
+    if (selectedCity.stateCode === 'GL') return 'Global News';     // “Global” pseudo‑city
+    return `Local News in ${selectedCity.name}, ${selectedCity.stateCode}`;
+  })();
+
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
-       <header className="w-full">
+      <header className="w-full">
         <h1 className="text-4xl font-bold text-center">Local News App</h1>
       </header>
+
       <CitySearch onCitySelect={handleCitySelect} />
 
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">
-          {selectedCity
-            ? `Local News in ${selectedCity.name}, ${selectedCity.stateCode}`
-            : 'Global News'}
-        </h2>
+        <h2 className="text-xl font-semibold">{sectionTitle}</h2>
         <button
           onClick={() => setShowModal(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -44,7 +48,7 @@ export default function App() {
 
       <NewsList
         key={refreshKey}
-        isGlobal={!selectedCity}
+        isGlobal={!selectedCity || selectedCity.stateCode === 'GL'}
         cityName={selectedCity?.name || ''}
         stateCode={selectedCity?.stateCode || ''}
       />
