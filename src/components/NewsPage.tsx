@@ -1,12 +1,13 @@
+// src/components/NewsPage.tsx (or App.tsx)
 import React, { useState } from 'react';
-import CitySearch from './components/CitySearch';
-import NewsList from './components/NewsList';
-import NewsModal from './components/NewsModal';
-import NewsForm from './components/NewsForm';
+import CitySearch from './CitySearch';
+import NewsList from './NewsList';
+import NewsForm from './NewsForm';
+import NewsModal from './NewsModal';
 
 type City = { name: string; stateCode: string };
 
-export default function App() {
+export default function NewsPage() {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -18,14 +19,11 @@ export default function App() {
 
   const handleNewsSubmitted = () => {
     setRefreshKey((prev) => prev + 1);
-    setShowModal(false);
+    setShowModal(false);   // close the modal
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
-       <header className="w-full">
-        <h1 className="text-4xl font-bold text-center">Local News App</h1>
-      </header>
       <CitySearch onCitySelect={handleCitySelect} />
 
       <div className="flex justify-between items-center">
@@ -51,7 +49,8 @@ export default function App() {
 
       {showModal && (
         <NewsModal onClose={() => setShowModal(false)}>
-          <h3 className="text-lg font-bold mb-4">Submit News</h3>
+          {/* put the form inside the modal */}
+          <div className="mb-4 text-lg font-bold">Submit News</div>
           <NewsForm onSubmitSuccess={handleNewsSubmitted} />
         </NewsModal>
       )}
