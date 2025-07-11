@@ -15,12 +15,15 @@ interface NewsListProps {
 export default function NewsList({ cityName, stateCode, isGlobal }: NewsListProps) {
   const [news, setNews] = useState<NewsItem[]>([]);
 
+  // Base URL from env or default to local dev
+const BASE_URL = 'http://application-backend-env.eba-32dddvei.eu-central-1.elasticbeanstalk.com';
+
   useEffect(() => {
     async function fetchNews() {
       try {
-        let url = isGlobal
-          ? 'http://localhost:8080/api/news/global'
-          : `http://localhost:8080/api/news?cityName=${encodeURIComponent(
+        const url = isGlobal
+          ? `${BASE_URL}/api/news/global`
+          : `${BASE_URL}/api/news?cityName=${encodeURIComponent(
               cityName
             )}&stateName=${encodeURIComponent(stateCode)}`;
 
@@ -41,7 +44,7 @@ export default function NewsList({ cityName, stateCode, isGlobal }: NewsListProp
     }
 
     fetchNews();
-  }, [cityName, stateCode, isGlobal]);
+  }, [cityName, stateCode, isGlobal, BASE_URL]);
 
   return (
     <div>

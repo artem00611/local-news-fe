@@ -22,6 +22,9 @@ export default function CitySearch({ onCitySelect }: CitySearchProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Use environment variable for base URL or fallback to localhost
+const BASE_URL = 'http://application-backend-env.eba-32dddvei.eu-central-1.elasticbeanstalk.com';
+
   /* ───────── close dropdown on outside click ───────── */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -39,8 +42,8 @@ export default function CitySearch({ onCitySelect }: CitySearchProps) {
     try {
       const url =
         q.trim().length === 0
-          ? 'http://localhost:8080/api/city/search/count'
-          : `http://localhost:8080/api/city/search?query=${encodeURIComponent(q)}`;
+          ? `${BASE_URL}/api/city/search/count`
+          : `${BASE_URL}/api/city/search?query=${encodeURIComponent(q)}`;
 
       const res = await fetch(url);
       const data: CityResponse = await res.json();
