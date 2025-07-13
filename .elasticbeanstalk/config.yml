@@ -2,6 +2,10 @@ branch-defaults:
   master:
     environment: react-spa-env
     group_suffix: null
+environment-defaults:
+  react-spa-env:
+    branch: null
+    repository: null
 global:
   application_name: application-frontend
   branch: null
